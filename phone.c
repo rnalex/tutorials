@@ -123,7 +123,7 @@ gen_possible_symbols_from_keys(phone_entry **pphone, int pl, int pr)
 int
 main(int argc , char **argv)
 {
-	char sample_phone_number[]="*231-98";
+	char sample_phone_number[]="655-654-653";
 	phone_entry *selected_keys[MAX_KEYS];
 	prepare_selected_keys(sample_phone_number,sizeof(sample_phone_number)-1,selected_keys);
 	gen_possible_symbols_from_keys(selected_keys,0,sizeof(sample_phone_number)-2);
