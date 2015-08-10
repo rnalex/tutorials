@@ -1,5 +1,6 @@
 /*
  * RN Alex
+ * Tutorial : TUT103
  *
  * Copy a list which has two logical list
  * a) a traditional singly linked list linked (A) via the next field
@@ -17,8 +18,6 @@
  * and C we can restore the relationship which is similar to B. Restore the 
  * relationship in A via the nextfield.
  *
- * This implementation assumes |A| == |C|. If not we need to handle the
- * edge conditions.
  *
  */
 #include <stdio.h>
@@ -83,16 +82,16 @@ void copy_list(Node **src , Node **dst)
 	s = *src;
 	d = *dst;
 	while( s && d ) {
-		Node *real_link;
-		Node *copied_link;
-
+		Node *real_link=NULL;
+		Node *copied_link=NULL;
+		
 		copied_link = d->nextlink;
-		real_link = copied_link->nextlink;
+		real_link = copied_link ? copied_link->nextlink : NULL;
 
 		d->nextlink = real_link;
 		s->nextlink = copied_link;
 
-		s = s->next;
+		s = copied_link;
 		d = d->nextlink;
 	}
 }
@@ -101,6 +100,25 @@ void copy_list(Node **src , Node **dst)
 int
 main(int argc , char **argv)
 {
+	printf("\nTest case |A| == |B| ");
+	/*|A| == |B| */
+	show_list(list);
+	copy_list(&list,&lcopy);
+	show_list(lcopy);
+	show_list(list);
+	/* |B| < |A| */
+	printf("\nTest case |A| > |B| ");
+	D.nextlink = NULL;
+	lcopy = NULL; /* Dont care about leak */
+	show_list(list);
+	copy_list(&list,&lcopy);
+	show_list(lcopy);
+	show_list(list);
+	/* |B| has a loop */
+	
+	printf("\nTest B has a loop ");
+	D.nextlink = &D;
+	lcopy = NULL; /* Dont care about leak */
 	show_list(list);
 	copy_list(&list,&lcopy);
 	show_list(lcopy);
