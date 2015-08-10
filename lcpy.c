@@ -106,7 +106,10 @@ main(int argc , char **argv)
 	copy_list(&list,&lcopy);
 	show_list(lcopy);
 	show_list(list);
-	/* |B| < |A| */
+	/* |B| < |A|  
+          -- We leave dont care nodes as such in the list
+           ie B connected nodes will be intact but not the 
+           the unconnected nodes. */
 	printf("\nTest case |A| > |B| ");
 	D.nextlink = NULL;
 	lcopy = NULL; /* Dont care about leak */
@@ -114,7 +117,8 @@ main(int argc , char **argv)
 	copy_list(&list,&lcopy);
 	show_list(lcopy);
 	show_list(list);
-	/* |B| has a loop */
+#if 0
+	/* |B| has a loop -- invalid test case */
 	
 	printf("\nTest B has a loop ");
 	D.nextlink = &D;
@@ -123,4 +127,5 @@ main(int argc , char **argv)
 	copy_list(&list,&lcopy);
 	show_list(lcopy);
 	show_list(list);
+#endif
 }
