@@ -8,6 +8,11 @@
  *        dequeue node
  *        enque all children of node.
  *
+ * We use a marker node to print the level information.
+ * We add the marker for the last node in a level.
+ * We figure out the last node if the examined node is 
+ * a last node in its level.
+ *
  */
 
 #include <stdio.h>
@@ -32,6 +37,7 @@ Tnode F = {NULL,NULL,'F'};
 Tnode G = {NULL,NULL,'G'};
 Tnode H = {NULL,NULL,'H'};
 Tnode I = {NULL,NULL,'I'};
+Tnode M = {NULL,NULL,'\n'}; //Marker
 
 #define MAX_QUEUE_SIZE (16)
 #define QUEUE_MOD(index) (index & (MAX_QUEUE_SIZE-1))
@@ -94,13 +100,17 @@ show_tree(Tnode *root)
 {
 	if (root) {
 		enqueue(queue,root);
+		enqueue(queue,&M);
 	}
 	struct Tnode *tnode;
 	while (!empty_queue(queue)) {
 		tnode = dequeue(queue);
-		printf("\n%c",tnode->data);
+		printf("%c",tnode->data);
 		if (tnode->left) enqueue(queue,tnode->left);
 		if (tnode->right) enqueue(queue,tnode->right);
+		if ((tnode == &M) && !empty_queue(queue)) {
+			enqueue(queue,&M);
+		}
 	}
 }
 
