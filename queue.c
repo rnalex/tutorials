@@ -52,9 +52,11 @@ dequeue(int *q)
 	if (empty_queue(q)) {
 		assert(!"Enough items");
 	} else {
+
+		int old_qtail=qtail;
 		--qsize;
 		qtail = QUEUE_MOD(qtail+1);
-		return q[QUEUE_MOD(qtail+qsize+2)];
+		return q[QUEUE_MOD(old_qtail)];
 	}
 }
 
