@@ -21,7 +21,7 @@ typedef struct Tnode {
 } Tnode;
 
 struct Tnode R,A,B,C,D,E,F,G,H,I;
-#define TNODE_ID(tnp) ('A'+((unsigned long )tnp - (unsigned long)&A))
+
 Tnode R = {&A,&B,'R'};
 Tnode A = {&C,&D,'A'};
 Tnode B = {&E,&F,'B'};
