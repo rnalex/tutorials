@@ -1,17 +1,9 @@
 /*
  * Find the highest common ancestor of 2 nodes in a tree
  * TUT112
- * Use a queue to record all the nodes in a tree.
- * The rule of recording is as follows.
- *    enqueue the root.
- * while (queue is non empty)
- *        dequeue node
- *        enque all children of node.
- *
- * We use a marker node to print the level information.
- * We add the marker for the last node in a level.
- * We figure out the last node if the examined node is 
- * a last node in its level.
+ * Find out the node which has a different direction
+ * for the data in nodes. Check if the subtrees have 
+ * the required data.
  *
  */
 
