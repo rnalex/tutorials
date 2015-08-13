@@ -17,19 +17,6 @@ typedef struct Tnode {
 	char  data;
 } Tnode;
 
-struct Tnode R,A,B,C,D,E,F,G,H,I;
-
-Tnode R = {&A,&B,'R'};
-Tnode A = {&C,&D,'A'};
-Tnode B = {&E,&F,'B'};
-Tnode C = {&G,&H,'C'};
-Tnode D = {&I,NULL,'D'};
-Tnode E = {NULL,NULL,'E'};
-Tnode F = {NULL,NULL,'F'};
-Tnode G = {NULL,NULL,'G'};
-Tnode H = {NULL,NULL,'H'};
-Tnode I = {NULL,NULL,'I'};
-Tnode M = {NULL,NULL,'\n'}; //Marker
 
 
 struct Tnode R1,A1,B1,C1,D1,E1,F1,G1,H1,I1;
@@ -44,7 +31,7 @@ Tnode F1 = {NULL,NULL,'A'+11};
 Tnode G1 = {NULL,NULL,'A'+1};
 Tnode H1 = {NULL,NULL,'A'+3};
 Tnode I1 = {NULL,NULL,'A'+5};
-Tnode M1 = {NULL,NULL,'\n'}; //Marker
+Tnode M = {NULL,NULL,'\n'}; //Marker
 
 #define MAX_QUEUE_SIZE (16)
 #define QUEUE_MOD(index) (index & (MAX_QUEUE_SIZE-1))
@@ -128,7 +115,6 @@ FindANC(Tnode *root, char data1 , char data2)
 	Tnode *vnode1,*vnode2;
 	if (root) {
 		while (tnode) {
-			printf("\n - %c",tnode->data);
 			if (data1 > tnode->data) {
 				vnode1 = tnode->right;
 			}
