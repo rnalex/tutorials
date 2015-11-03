@@ -11,18 +11,23 @@
 #define CPP_CACHE_STORE_H_
 using namespace std;
 
+#ifdef LOGIT
+#define LOG(...) do { cout << endl << __VA_ARGS__ ;}while(0);
+#else
+#define LOG(...)
+#endif
+
 template <typename K , typename V ,size_t L = 2>
 class CacheStore {
 	typedef pair<K,weak_ptr<V>> UsedItem;
 	typedef deque <UsedItem> UsedItems;
 	typedef unordered_map <K,shared_ptr<V>> CachedItems;
-#if 0
 	typedef typename deque <UsedItem>::iterator UsedItemsIt;
 	typedef typename unordered_map <K,shared_ptr<V>>::iterator CachedItemIt;
-#endif
+
 	public:
-	CacheStore(){ cout << endl << "Creating Cache Store ...";};
-	virtual ~CacheStore(){ cout <<endl << "Destroying Cache Store ..";};
+	CacheStore(){ LOG("Creating Cache Store");};
+	virtual ~CacheStore(){ LOG("Destroying Cache Store ..");};
 
 	bool Cache(K &k , V &v){
 		while (_recentlyUsedItems.size() >= L) {
@@ -35,7 +40,7 @@ class CacheStore {
 	shared_ptr<V> Find(K &k) {
 		auto search = _cachedItems.find(k);
 		if (search != _cachedItems.end()) {
-			cout << endl << "Found --" << typeid(search).name() << " " << search->second.use_count();
+			LOG("Found --" << typeid(search).name() << " " << search->second.use_count());
 			return search->second;
 		}
 		else return nullptr;
@@ -45,19 +50,19 @@ class CacheStore {
 		if (search != _cachedItems.end())_cachedItems.erase(search);
 	}
 	void Show() {
-		cout << endl << "--- Recently Used Items ---";
+		LOG("--- Recently Used Items ---");
 		for(auto it = _recentlyUsedItems.begin(); it != _recentlyUsedItems.end();++it) {
 			if (auto sp = it->second.lock()) {
-			cout << endl << it->first << " " << *sp ;
+			LOG(it->first << " " << *sp );
 			}
 			else {
-				cout << endl << it->first << " " << "Expired";
+				LOG(it->first << " " << "Expired");
 			}
 		}              
 
-		cout << endl << "--- Cached Items ---";
+		LOG("--- Cached Items ---");
 		for(auto it = _cachedItems.begin(); it != _cachedItems.end();++it) {
-			cout << endl << it->first <<" "<< *it->second;
+			LOG(it->first <<" "<< *it->second);
 		}              
 	}
 
@@ -66,23 +71,5 @@ class CacheStore {
 	UsedItems _recentlyUsedItems;
 };
 
-#if 0
-int
-main(int argc , char **argv)
-{
-	int k[]={1,2,3,4,5};
-	int v[]={2,4,6,8,10};
-
-	CacheStore <int,int,8> cs;
-	for(int i=0; i < 5; ++i) {
-		cs.Cache(k[i],v[i]);
-		cs.Show();
-		if (i&1)cs.Expire(k[i]);
-		shared_ptr<int> sv = cs.Find(k[i]);
-		cout << endl <<"Finding Key " << k[i] <<" Value " << ((sv == nullptr) ?  0 : *sv.get()) ;
-	}
-}
 #endif
-#endif
-
 

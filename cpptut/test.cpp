@@ -17,7 +17,7 @@ class SampleTest : public ::testing::Test {
 				cs.Show();
 				if (i&1)cs.Expire(k[i]);
 				shared_ptr<int> sv = cs.Find(k[i]);
-				cout << endl <<"Finding Key " << k[i] <<" Value " << ((sv == nullptr) ?  0 : *sv.get()) ;
+				//cout << endl <<"Finding Key " << k[i] <<" Value " << ((sv == nullptr) ?  0 : *sv.get()) ;
 			}
 
 		}
