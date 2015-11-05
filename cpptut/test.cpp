@@ -8,18 +8,6 @@ class SampleTest : public ::testing::Test {
 	public:
 		virtual void SetUp()
 		{
-			CacheStore <int,int,8> cs;
-
-			int k[]={1,2,3,4,5};
-			int v[]={2,4,6,8,10};
-			for(int i=0; i < 5; ++i) {
-				cs.Cache(k[i],v[i]);
-				cs.Show();
-				if (i&1)cs.Expire(k[i]);
-				shared_ptr<int> sv = cs.Find(k[i]);
-				//cout << endl <<"Finding Key " << k[i] <<" Value " << ((sv == nullptr) ?  0 : *sv.get()) ;
-			}
-
 		}
 
 		virtual void TearDown()
@@ -28,7 +16,7 @@ class SampleTest : public ::testing::Test {
 };
 
 bool
-customtestcase()
+cache_it_and_find_it()
 {
 
 	int k[]={1,2,3,4,5};
@@ -45,6 +33,23 @@ customtestcase()
 	return true;
 }
 
+bool
+find_uncached()
+{
+
+	int k[]={1,2,3,4,5};
+	int v[]={2,4,6,8,10};
+	int nonkey[]={6,7,8,9,10};
+	CacheStore <int,int,8> cs;
+	for(int i=0; i < 5; ++i) {
+		cs.Cache(k[i],v[i]);
+		shared_ptr<int> sv = cs.Find(nonkey[i]);
+		int t = *sv.get();
+		if ( t!= v[i]) return true;
+	}
+
+	return false;
+}
 TEST_F(SampleTest, Positive) {
  ASSERT_TRUE(true);
 }
@@ -60,6 +65,10 @@ TEST_F(SampleTest, Zero) {
 TEST_F(SampleTest, Trivial) {
  ASSERT_TRUE(true);
 }
-TEST_F(SampleTest, customtestcase) {
+TEST_F(SampleTest, cache_it_and_find_it) {
+ ASSERT_TRUE(true);
+}
+
+TEST_F(SampleTest, find_uncached) {
  ASSERT_TRUE(true);
 }
