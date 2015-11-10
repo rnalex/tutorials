@@ -28,4 +28,5 @@ test: gtest
     -o test
 runtest: test
 	./test
-
+learn:  test
+	./test --gtest_filter="Learn*"

@@ -5,7 +5,36 @@
 
 using namespace std;
 
-class LearnGtestTestCases : public ::testing::Test {
+TEST(SimpleTestCase,SimpleComparatorTest) {
+	int expected = 5, actual=4;
+	int val1 = 1 , val2=4;
+	ASSERT_TRUE(true);
+	ASSERT_FALSE(false);
+	ASSERT_EQ(expected, expected);
+	EXPECT_EQ(expected, expected);
+	ASSERT_NE(val1, val2);	
+	EXPECT_NE(val1, val2);
+	ASSERT_LT(val1, val2);	
+	EXPECT_LT(val1, val2);
+	ASSERT_LE(val1, val2);	
+	EXPECT_LE(val1, val2);	
+	ASSERT_GT(val2, val1);	
+	EXPECT_GT(val2, val1);	
+	ASSERT_GE(val2, val1);
+	EXPECT_GE(val2, val1);
+}
+
+
+TEST(SimpleTestCase,SimpleStringTest) {
+	char *str1, *str2;
+
+	ASSERT_STREQ(str1, str2); EXPECT_STREQ(str1, str2);	//the two C strings have the same content
+	ASSERT_STRNE(str1, str2); EXPECT_STRNE(str1, str2);	//the two C strings have different content
+	ASSERT_STRCASEEQ(str1, str2);	EXPECT_STRCASEEQ(str1, str2);//the two C strings have the same content, ignoring case
+	ASSERT_STRCASENE(str1, str2);	EXPECT_STRCASENE(str1, str2);	//the two C strings have different content, ignoring case
+}
+
+class SimpleTestFixtureCase : public ::testing::Test {
 	public:
 		virtual void SetUp()
 		{
@@ -16,21 +45,11 @@ class LearnGtestTestCases : public ::testing::Test {
 		}
 };
 
-TEST_F(LearnGtestTestCases, Positive) {
- ASSERT_TRUE(true);
+TEST_F(SimpleTestFixtureCase,SimpleTestFixtureTest)
+{
+
 }
 
-TEST_F(LearnGtestTestCases, Negative) {
- ASSERT_TRUE(true);
-}
-
-TEST_F(LearnGtestTestCases, Zero) {
- ASSERT_TRUE(true);
-}
-
-TEST_F(LearnGtestTestCases, Trivial) {
- ASSERT_TRUE(true);
-}
 class CacheStoreTestCase : public ::testing::Test {
 	public:
 		virtual void SetUp()
@@ -78,11 +97,11 @@ find_uncached()
 	return false;
 }
 TEST_F(CacheStoreTestCase, cache_it_and_find_it) {
- ASSERT_TRUE(true);
+ ASSERT_TRUE(cache_it_and_find_it());
 }
 
 TEST_F(CacheStoreTestCase, find_uncached) {
- ASSERT_TRUE(true);
+ ASSERT_TRUE(find_uncached());
 }
 
 
@@ -112,7 +131,7 @@ find_entry_in_map_after_inserting()
 
 	t.Show();
 	TreeNode<int> *upi = t.CommonAncestor(d4,d2,d5); 	
-	cout << "Answer" << upi->data; 	
+	if (upi != nullptr) cout << "Answer" << upi->data; 	
 
 	upi = t.CommonAncestor(d5,d2,d6); 	
 	if (upi != nullptr) cout << "Answer" << upi->data; 	
@@ -122,6 +141,7 @@ find_entry_in_map_after_inserting()
 }
 TEST_F(MapTestCase,find_entry_in_map_after_inserting)
 {
-	ASSERT_TRUE(true);
+	ASSERT_TRUE(find_entry_in_map_after_inserting());
 }
+
 
