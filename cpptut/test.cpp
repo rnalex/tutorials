@@ -27,10 +27,17 @@ TEST(SimpleTestCase,SimpleComparatorTest) {
 
 TEST(SimpleTestCase,SimpleStringTest) {
 	char *str1, *str2;
+	char str1val[]="Test"; 
+	char str2val[]="Test"; 
+	str1 = str1val;
+	str2 = str2val;
 
 	ASSERT_STREQ(str1, str2); EXPECT_STREQ(str1, str2);	//the two C strings have the same content
+	str2val[0]='E';
 	ASSERT_STRNE(str1, str2); EXPECT_STRNE(str1, str2);	//the two C strings have different content
+	str2val[0]='t';
 	ASSERT_STRCASEEQ(str1, str2);	EXPECT_STRCASEEQ(str1, str2);//the two C strings have the same content, ignoring case
+	str2val[0]='E';
 	ASSERT_STRCASENE(str1, str2);	EXPECT_STRCASENE(str1, str2);	//the two C strings have different content, ignoring case
 }
 
