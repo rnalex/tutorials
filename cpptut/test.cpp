@@ -97,11 +97,10 @@ find_uncached()
 	for(int i=0; i < 5; ++i) {
 		cs.Cache(k[i],v[i]);
 		shared_ptr<int> sv = cs.Find(nonkey[i]);
-		int t = *sv.get();
-		if ( t!= v[i]) return true;
+		if (sv != nullptr) return false;
 	}
 
-	return false;
+	return true;
 }
 TEST_F(CacheStoreTestCase, cache_it_and_find_it) {
  ASSERT_TRUE(cache_it_and_find_it());
@@ -112,7 +111,7 @@ TEST_F(CacheStoreTestCase, find_uncached) {
 }
 
 
-class MapTestCase : public ::testing::Test {
+class TreeTestCase : public ::testing::Test {
 	public:
 		virtual void SetUp()
 		{
@@ -122,33 +121,24 @@ class MapTestCase : public ::testing::Test {
 		{
 		}
 };
-bool
-find_entry_in_map_after_inserting()
+
+TEST_F(TreeTestCase,find_ancestor_in_tree_after_inserting)
 {
 	Tree<int> t;
 	int six=6;
 	int four=4;
 	int two=2;
 	int five=5;
+	int nine=9;
+	int ancestor=0;
 
-	unique_ptr<TreeNode<int>> d4(t.Insert(four));
-	unique_ptr<TreeNode<int>> d6(t.Insert(six));
-	unique_ptr<TreeNode<int>> d2(t.Insert(two));
-	unique_ptr<TreeNode<int>> d5(t.Insert(five));
+	t.Insert(four);
+	t.Insert(six);
+	t.Insert(two);
+	t.Insert(five);
 
-	t.Show();
-	TreeNode<int> *upi = t.CommonAncestor(d4,d2,d5); 	
-	if (upi != nullptr) cout << "Answer" << upi->data; 	
+	ASSERT_TRUE(t.FindCommonAncestor(ancestor,two,five));
+	ASSERT_EQ(ancestor,four);
 
-	upi = t.CommonAncestor(d5,d2,d6); 	
-	if (upi != nullptr) cout << "Answer" << upi->data; 	
-	t.Show();
-	d4.reset();
-	return true;
+	ASSERT_FALSE(t.FindCommonAncestor(ancestor,two,nine));
 }
-TEST_F(MapTestCase,find_entry_in_map_after_inserting)
-{
-	ASSERT_TRUE(find_entry_in_map_after_inserting());
-}
-
-

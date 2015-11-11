@@ -10,6 +10,7 @@ struct TreeNode {
 	unique_ptr<TreeNode> left;
 	unique_ptr<TreeNode> right;
 	TreeNode(D indata):data(indata),left(nullptr),right(nullptr){};
+	~TreeNode(){}
 };
 
 template <typename T>
@@ -21,7 +22,7 @@ class Tree {
 		TreeNode<T> *
 			SubtreeInsert(unique_ptr<TreeNode<T>> &subtree, const T data) {
 				if (subtree.get() == nullptr) {
-					cout << endl << "Inserting ... " << data;
+					//cout << endl << "Inserting ... " << data;
 					subtree = unique_ptr<TreeNode<T>>(new TreeNode<T>(data));
 					return subtree.get();
 				}
@@ -36,9 +37,38 @@ class Tree {
 		void
 		SubtreeShow(const unique_ptr<TreeNode<T>> &subtree) {
 			if (subtree.get() == nullptr) return;
-			cout << endl << subtree->data;
+			//cout << endl << subtree->data;
 			SubtreeShow(subtree->left);
 			SubtreeShow(subtree->right);
+		}
+
+
+		bool 
+		_FindCommonAncestor(const unique_ptr<TreeNode<T>> &subtree,
+				T &ancestor, 
+				const T & nodeA,
+				const T & nodeB
+			      ) {
+			if (subtree.get() == nullptr) {
+				return nullptr;
+			}
+
+			//cout << "Visiting data ..." << subtree->data << endl;
+			if (subtree->data == nodeA || subtree->data == nodeB)
+			{
+				//cout << "Found data ..." << node->data << endl;
+				ancestor = subtree->data;
+				return true;
+			}
+			bool ltree = _FindCommonAncestor(subtree->left,ancestor,nodeA,nodeB);
+			bool rtree = _FindCommonAncestor(subtree->right,ancestor,nodeA,nodeB);
+			if (ltree && rtree) {
+				ancestor = subtree->data;
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 	public:
 		TreeNode<T> *
@@ -54,10 +84,10 @@ class Tree {
 				return nullptr;
 			}
 			
-			cout << "Visiting data ..." << node->data << endl;
+			//cout << "Visiting data ..." << node->data << endl;
 			if (node->left == nodeA || node->right == nodeB)
 			{
-				cout << "Found data ..." << node->data << endl;
+				//cout << "Found data ..." << node->data << endl;
 				return node.get();
 			}
 			TreeNode<T> * ltree = CommonAncestor(node->left,nodeA,nodeB);
@@ -70,6 +100,15 @@ class Tree {
 			}
 		}
 
+		bool 
+		FindCommonAncestor( T & ancestor, 
+				const T & nodeA,
+				const T & nodeB
+				) {
+
+			return _FindCommonAncestor(_root,ancestor,nodeA,nodeB);
+		}
+
 		void
 		Show() {
 			SubtreeShow(_root);
@@ -80,29 +119,3 @@ class Tree {
 };
 
 #endif
-#if 0
-int
-main(int argc , char **argv) 
-{
-	Tree<int> t;
-	int six=6;
-	int four=4;
-	int two=2;
-	int five=5;
-
-	unique_ptr<TreeNode<int>> d4(t.Insert(four));
-	unique_ptr<TreeNode<int>> d6(t.Insert(six));
-	unique_ptr<TreeNode<int>> d2(t.Insert(two));
-	unique_ptr<TreeNode<int>> d5(t.Insert(five));
-
-	t.Show();
-	TreeNode<int> *upi = t.CommonAncestor(d4,d2,d5); 	
-	cout << "Answer" << upi->data; 	
-
-	upi = t.CommonAncestor(d5,d2,d6); 	
-	if (upi != nullptr) cout << "Answer" << upi->data; 	
-	t.Show();
-	d4.reset();
-}
-#endif
-	
