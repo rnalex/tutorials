@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 #include "try.hpp"
 #include "tree.hpp"
+#include "xsection.hpp"
 
 using namespace std;
 
@@ -121,6 +122,17 @@ class TreeTestCase : public ::testing::Test {
 		{
 		}
 };
+
+
+TEST_F(TreeTestCase,find_common_elements)
+{
+
+	test_combo<int,vector>();
+	test_combo<float,vector>();
+	test_combo<float,deque>();
+	test_combo<char,deque>();
+	test_combo<long long,deque>();
+}
 
 TEST_F(TreeTestCase,find_ancestor_in_tree_after_inserting)
 {
