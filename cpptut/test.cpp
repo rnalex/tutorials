@@ -124,16 +124,80 @@ class TreeTestCase : public ::testing::Test {
 };
 
 
-TEST_F(TreeTestCase,find_common_elements)
-{
+using ::testing::TestWithParam;
+using ::testing::Values;
 
+//Value Paramaeterized testing
+
+#if 0
+//Test if the parameters are passed for each tested type
+class XsectionTest : public ::testing::TestWithParam<char*> {
+	public:
+		virtual void SetUp()
+		{
+			_str  = GetParam();
+		}
+
+		virtual void TearDown()
+		{
+		}
+	char * _str;
+};
+
+TEST_P(XsectionTest,find_common_elements)
+{
+	//TODO parameterize the container and the data type
 	test_combo<int,vector>();
 	test_combo<float,vector>();
 	test_combo<float,deque>();
 	test_combo<char,deque>();
 	test_combo<long long,deque>();
+	test_combo<unsigned int,deque>();
+	cout << _str;
 }
 
+char mystr[]="++++++++++++++++++This is my test +++++++++++++++++";
+char *mystrptr=mystr;
+
+char mystr1[]="++++++++++++++++++This is my test 2nd +++++++++++++++++";
+char *mystrptr1=mystr1;
+
+INSTANTIATE_TEST_CASE_P(
+    XsectionTestForAllTypes,
+    XsectionTest,
+    Values(mystrptr,mystrptr1));
+#endif
+
+class XsectionTest1 : public ::testing::TestWithParam<function<void(void)>> {
+	public:
+		virtual void SetUp()
+		{
+			_fn  = GetParam();
+		}
+
+		virtual void TearDown()
+		{
+		}
+	function<void(void)> _fn;
+};
+
+TEST_P(XsectionTest1,find_common_elements)
+{
+	_fn();
+}
+
+INSTANTIATE_TEST_CASE_P(
+    XsectionTestForAllTypes1,
+    XsectionTest1,
+    Values(
+	&test_combo<int,vector>,
+	&test_combo<float,vector>,
+	&test_combo<float,deque>,
+	&test_combo<char,deque>,
+	&test_combo<long long,deque>,
+	&test_combo<unsigned int,deque>));
+
+#if 0
 TEST_F(TreeTestCase,find_ancestor_in_tree_after_inserting)
 {
 	Tree<int> t;
@@ -154,3 +218,6 @@ TEST_F(TreeTestCase,find_ancestor_in_tree_after_inserting)
 
 	ASSERT_FALSE(t.FindCommonAncestor(ancestor,two,nine));
 }
+#endif
+
+

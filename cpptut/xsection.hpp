@@ -85,6 +85,7 @@ test_combo()
 	C<D> l5 {11,12,13,14,15};
 	C<C<D>*> l {&l1,&l2,&l3,&l4,/*&l5*/};
 	auto xl = find_xsection<D,C>(l);	
+	cout << endl << "Testing with type = " << typeid(l).name();
 	//for(int i=0; i < xl.size();++i) cout << " "<< xl[i];
 }
 #if 0
