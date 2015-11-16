@@ -1,3 +1,8 @@
+#
+#For detailed run
+#scons -Q --debug=explain
+#
+
 import sys, os, commands, platform, distutils.sysconfig, os.path, re, types
 import subprocess
 
@@ -13,12 +18,18 @@ env.Append(CPPPATH = ['.','../googletest/googletest/include/','../googletest/goo
 
 #print "CPPPATH =",env['CPPPATH']
 #env = Environment(CPPPATH = ['../googletest/googletest/include/'])
-env.Prepend(CPPFLAGS = ['-std=c++11', '-isystem','-pthread'])
+#env.Prepend(CPPFLAGS = ['-std=c++11', '-isystem','-pthread'])
+#env.Prepend(CPPFLAGS = ['-std=c++11', '-isystem'])
+env.Prepend(CPPFLAGS = ['-std=c++11'])
+#env.Prepend(LIBPATH = ['../cpptut/'])
+env.Prepend(LINKFLAGS = ['-pthread'])
 
 print "PROGSUFFIX =",env['PROGSUFFIX']
 print "CPPFLAGS =",env['CPPFLAGS']
 print "CPPPATH =",env['CPPPATH']
+print "LINKFLAGS=",env['LINKFLAGS']
 
-env.Program(target = 'test', source = ["../cpptut/test.cpp","../googletest/googletest/src/gtest_main.cc","../cpptut/libgtest.a"])
+#env.Program(target = 'test', source = ["../cpptut/test.cpp","../googletest/googletest/src/gtest_main.cc","../cpptut/libgtest.a"])
+env.Program(target = 'test', source = ["../cpptut/test.cpp","../googletest/googletest/src/gtest_main.cc","../googletest/googletest/src/gtest-all.cc"])
 #env.Program(target = 'hw', source = ["hw.c"])
 
