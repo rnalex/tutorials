@@ -13,7 +13,8 @@ print "INCLUDE_FILES= ",include_files
 libraries = ['pthread']
 library_paths = ''
 
-env = Environment()
+#env = Environment()
+env = Environment(CXX='g++-4.8')
 env.Append(CPPPATH = ['.','googletest/googletest/include/','googletest/googletest/','cpptut'])
 # Set our g++ compiler flags
 env.Append( CPPFLAGS=['-std=c++11', '-pthread', '-Wall', '-g'] )
