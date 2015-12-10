@@ -1,4 +1,4 @@
 language: cpp
 script: scons
-compiler: gcc-2.8
+compiler: gcc-4.8
 
