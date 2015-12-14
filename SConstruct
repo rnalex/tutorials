@@ -1,3 +1,7 @@
+import sys
+import os
+from subprocess import call 
+
 # Tell SCons to create our build files in the 'build' directory
 VariantDir('build', 'cpptut', duplicate=0)
 
@@ -21,7 +25,15 @@ env.Append( CPPFLAGS=['-std=c++11', '-pthread', '-Wall', '-g'] )
 env.Prepend(LINKFLAGS = ['-pthread'])
 
 # Tell SCons the program to build
-#env.Program('build/test', source_files, LIBS = libraries, LIBPATH = library_paths)
 
 env.Program(target = 'build/test', source = ["cpptut/test.cpp","googletest/googletest/src/gtest_main.cc","googletest/googletest/src/gtest-all.cc"])
+
+from subprocess import call
+
+def unit_test( target, source, env ):
+    call(["build/test"]);
+
+unit_test_command = Command( 'unit_test', [], unit_test )
+Depends( unit_test_command, 'build/test')
+Default( unit_test_command )
 
