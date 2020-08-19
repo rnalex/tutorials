@@ -20,8 +20,7 @@ class Solution(object):
         return len(unique_emails)
 
 s = Solution()
-n = s.numUniqueEmails(["test.email+alex@leetcode.com","test.e.mail+bob.cathy@leetcode.com","testemail+david@lee.tcode.com"])
-n = s.numUniqueEmails(["test.email+alex@leetcode.com","test.e.mail+bob.cathy@leetcode.com","testemail+david@lee.tcode.com"])
-print(n)
+n = s.numUniqueEmails(["test.email+alex@testcode.com","test.e.mail+bob.cathy@testcode.com","testemail+david@tes.tcode.com"])
+assert(n==2)
 
 
