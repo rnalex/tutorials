@@ -20,47 +20,6 @@ void show(struct ListNode * head)
   }
 }
 
-/* [1->2->null]  2 => 2 */
-
-struct ListNode* removeNthFromEnd(struct ListNode* head, int n){
-      int nodes = 0;
-      struct ListNode * prev = head;
-      struct ListNode * cur = head;
-      struct ListNode * pprev = head;
-
-      if (n <= 0 || head == NULL) {
-	return head;
-      }
-
-      /* Find the nth node from the start */ 
-      while (cur != NULL && nodes < n) {
-          printf("\n Count %d val %d", nodes,cur->val);
-          nodes++;
-          cur = cur->next;      
-      }
-
-      /* There is no enough nodes */
-      if (nodes != n ) {
-        return head;
-      }
-
-      printf("\n N %d nodes %d prev %d ",n,nodes,prev->val);
-
-      /* Move in lock steps till cur reaches end and prev reaches n nodes from end */
-      while (cur != NULL) {
-          cur = cur->next;
-          pprev = prev;
-          prev = prev->next;
-      }
-
-      if (pprev == prev) {
-          return prev->next;
-      }
-      else {
-          pprev->next = prev->next;
-      }
-      return head;
-}
 
 #define APPEND_ONE(tail,newnode)  \
 	do { \
@@ -138,8 +97,6 @@ int
 main(int argc, char **argv)
 {
   struct ListNode * head = &N0 , *head1 = &N5;
-  //show(head);
-  //show(removeNthFromEnd(head,3));
   show(head);
   show(head1);
   show(mergeTwoLists(head,head1));
